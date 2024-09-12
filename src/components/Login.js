@@ -49,7 +49,7 @@ const Login = () => {
             {/*Mobile Number*/}
             {
               !isSignInForm && <input
-              type="number"
+              type="text"
               placeholder="Mobile No."
               className="p-3 rounded-md text-black"
             />
