@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Header from './Header';
+import { formValidator } from '../utils/validate';
 const Login = () => {
 
-    const [isSignInForm, setIsSignInForm] = useState(true)
+    const [isSignInForm, setIsSignInForm] = useState(true);
+    const [errorMessage, setErrorMessage] = useState(true);
     const handleIsSignInForm = () =>
     {
         setIsSignInForm(!isSignInForm)
     }
+    const handleFormValidation = () => 
+    {
+        //   console.log(email.current.value);
+        //   console.log(password.current.value)
+          const messageGot = formValidator(email.current.value, password.current.value, mobileNumber.current.value, fullName.current.value)
+        //   console.log("testing message", a)
+        setErrorMessage(messageGot);
+    }
+    const email = useRef(null);
+    const password = useRef(null);
+    const mobileNumber = useRef(null)
+    const fullName = useRef(null);
   return (
     <div className="relative h-screen w-full">
 
@@ -35,6 +49,7 @@ const Login = () => {
             {/*Full Name*/}
             {
                 !isSignInForm && <input
+                ref={fullName}
                 type="text"
                 placeholder="Full Name"
                 className="p-3 rounded-md text-black"
@@ -42,6 +57,7 @@ const Login = () => {
             }
             {/* Email Input */}
             <input
+               ref={email}
               type="text"
               placeholder="Email Address"
               className="p-3 rounded-md text-black"
@@ -49,6 +65,7 @@ const Login = () => {
             {/*Mobile Number*/}
             {
               !isSignInForm && <input
+              ref={mobileNumber}
               type="text"
               placeholder="Mobile No."
               className="p-3 rounded-md text-black"
@@ -56,12 +73,17 @@ const Login = () => {
             }
             {/* Password Input */}
             <input
+              ref={password}
               type="password"
               placeholder="Password"
               className="p-3 rounded-md text-black"
             />
-            {/* Sign-In Button */}
-            <button className="py-3 px-6 bg-red-600 text-white font-bold rounded-md hover:bg-red-700 transition duration-300">
+            <p className=' text-red-700 font-bold rounded-md' >{errorMessage}</p>
+            {/* Sign-In Sign-Up Button */}
+            <button className="py-3 px-6 bg-red-600 text-white font-bold rounded-md hover:bg-red-700 transition duration-300"
+            onClick={handleFormValidation}
+            onSubmit={(e) => e.preventDefault()}
+            >
               {
                 isSignInForm ? "Sign In" : "Sign Up"
               }
@@ -86,7 +108,7 @@ const Login = () => {
             onClick={handleIsSignInForm}
             >
               {
-                isSignInForm ? "Sign up now" : "Sign In now"
+                isSignInForm ? "Sign up now" : "Sign in now"
               }
             </a>
             .
